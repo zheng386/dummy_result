@@ -30,7 +30,8 @@ line = name_file.readline()
 names = []
 results = []
 
-html_file.write('<!DOCTYPE html><html><head><meta charset="UTF-8"></head><title>Dummy result</title><body>This is a test page.<ul>')
+html_file.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><script language="JavaScript" type="text/javascript">function Checkvalues(){var str="<h4>Result</h4>";for (var i=0; i<document.contactform.item.length; i++){if (document.contactform.item[i].checked) {str += document.contactform.item[i].value;str += "<br>";}}document.write(str);}</script></head><title>Dummy result</title><body>This is a test page.<form name="contactform" action="#" method="GET"><ul>')
+
 
 while line:
 	names.append(line.strip())
@@ -38,7 +39,6 @@ while line:
 
 for i in range(random.randrange(30,40)):    #
     results.append([random.randrange(1,13),names[random.randrange(len(names))]])
-
 
 #print(results)
 
@@ -58,14 +58,14 @@ for i in range(1,13):
     head = False
     for direc, item in results_sort_direc:
         if i == direc and head == False:
-            html_file.write('<li><h4>' + str(direc) +'時方向</h4><input type="checkbox" value="0">' + item)
+            html_file.write('<li><h4>' + str(direc) +'時方向</h4><input type="checkbox" name="item" value=' + item + '>' + item)
             head = True
             if(eval(item).show()>1):
                 html_file.write(' (' + str(eval(item).add()) + ' of ' + str(eval(item).show()) + ')')
             html_file.write('<br>')
             #print(item,eval(item).show())
         elif i == direc :
-            html_file.write('<input type="checkbox" value="' + item + '">' + item)
+            html_file.write('<input type="checkbox" name="item" value=' + item + '>' + item)
             if(eval(item).show()>1):
                 html_file.write(' (' + str(eval(item).add()) + ' of ' + str(eval(item).show()) + ')')
             html_file.write('<br>')
@@ -74,7 +74,7 @@ for i in range(1,13):
         html_file.write('</li>')
 
 
-html_file.write('</ul></body></html>')
+html_file.write('</ul><input type="button" value="submit" onclick="Checkvalues();"></form></body></html>')
 
 name_file.close
 html_file.close
